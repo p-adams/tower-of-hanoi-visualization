@@ -1,6 +1,6 @@
 # tower-of-hanoi-visualization
 
-> visualization of tower of hanoi puzzle
+> interactive visualization of tower of hanoi puzzle
 
 ## Build Setup
 
