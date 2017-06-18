@@ -1,7 +1,7 @@
 {
   "name": "tower-of-hanoi-visualization",
   "version": "1.0.0",
-  "description": "visualization of tower of hanoi puzzle",
+  "description": "Interactive visualization of tower of hanoi puzzle",
   "author": "Paul Adams",
   "private": true,
   "dependencies": {
