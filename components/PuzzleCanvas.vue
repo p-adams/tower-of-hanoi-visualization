@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="flex-container">
         puzzle canvas {{msg}}
     </div>
 </template>
@@ -13,3 +13,10 @@ export default {
   }
 }
 </script>
+<style>
+  .flex-container {
+    background-color: lightgrey;
+    height: 250px;
+    width: 500px;
+  }
+</style>
