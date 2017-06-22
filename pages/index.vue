@@ -1,18 +1,17 @@
 <template>
   <section class="container">
     <div>
-      <PuzzleCanvas/>
-
+      <Puzzle></Puzzle>
     </div>
   </section>
 </template>
 
 <script>
-import PuzzleCanvas from '~components/PuzzleCanvas.vue'
+import Puzzle from '~components/Puzzle.vue'
 
 export default {
   components: {
-    PuzzleCanvas
+    Puzzle
   }
 }
 </script>
@@ -20,6 +19,8 @@ export default {
 <style>
 .container
 {
+  border: 1px solid red;
+  background: #333333;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -31,7 +32,6 @@ export default {
   font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
   display: block;
   font-weight: 300;
-  font-size: 100px;
   color: #35495e;
   letter-spacing: 1px;
 }
