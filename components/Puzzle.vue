@@ -8,11 +8,11 @@
       <div v-if="showWin">
         <p>You won in {{totalMoves}}</p>
       </div>
-      <span v-if="totalMoves > 0">Moves made {{totalMoves}}</span>
+      <p class="moves" v-if="totalMoves > 0">Moves made {{totalMoves}}</p>
       <button @click="restart">restart</button>
       <div class="flex-container">
         <div class="flex-item">
-          <ul id="src">
+          <ul class="src">
             <li
               class="disk"
               v-for="disk in src"
@@ -29,7 +29,7 @@
           </ul>
         </div>
         <div class="flex-item">
-          <ul id="aux">
+          <ul class="aux">
             <li
               class="disk"
               v-for="disk in aux"
@@ -48,7 +48,7 @@
           </ul>
           </div>
         <div class="flex-item">
-          <ul id="dest">
+          <ul class="dest">
             <li
               class="disk"
               v-for="disk in dest"
@@ -89,7 +89,7 @@ export default {
     }
   },
   created () {
-    this.stackDisks()
+    // this.stackDisks()
   },
   methods: {
     stackDisks () {
@@ -117,7 +117,7 @@ export default {
           if (theDisk.id === this.selectedDisk.id) {
             this.fromPole.shift()
             toPole.unshift(theDisk)
-            this.setTop
+            this.setTop()
           }
         })
         this.moves++
@@ -139,6 +139,7 @@ export default {
         }
         this.fromPole[0].isTop = true
       })
+      if (this.fromPole[0]) this.fromPole[0].isTop = true
     },
     isSmaller () {
       let sm = false
@@ -187,30 +188,34 @@ export default {
     display: flex;
     border: 1px solid green;
     background-color: lightgrey;
+    margin-top: 25px;
     height: 250px;
-    width: 800px;
+    width: 1000px;
   }
   .flex-item {
     background-color: #9E9E9E;
-    width: 400px;
+    width: 700px;
     height: 200px;
-    margin: 30px;
+    margin: 10px;
+    margin-top: 30px;
   }
   .title {
     color: white;
     text-align: center;
   }
-  .src .aux .dest {
-    height: 222px;
+  .src, .aux, .dest {
+    border: 1px solid yellow;
+    width: 275px;
+    height: 175px;
     position: relative;
   }
   .base {
     border: 1px solid red;
     text-align: center;
-    width: 350px;
+    width: 225px;
     height: 25px;
     margin-left: -40px;
-    position: absolute
+    position: absolute;
   }
   .base:hover {
     cursor: pointer;
@@ -221,7 +226,7 @@ export default {
     text-align: center;
     padding: 10px;
     margin-left: 25%;
-    border-radius: 15px;
+    border-radius: 2px;
     margin-top: 3px;
   }
   .disk:hover {
@@ -244,6 +249,9 @@ export default {
   h4 {
     text-align: center;
     margin-right: 30px;
+  }
+  .moves {
+    color: white;
   }
 
 </style>
