@@ -13,15 +13,17 @@
       <div class="flex-container">
         <div class="flex-item">
           <ul class="src">
-            <li
-              class="disk"
-              v-for="disk in src"
-              :key="disk.id"
-              :class="{disk1: disk.id === disk1.id, disk3 : disk.id === disk3.id}"
-              :style="{background: disk.color, width: disk.width}"
-              @click="moveDisk(src,disk)">
-              <span>{{disk.id}}</span>
-            </li>
+            <div class="pole">
+              <li
+                class="disk"
+                v-for="disk in src"
+                :key="disk.id"
+                :class="{disk1: disk.id === disk1.id, disk2: disk.id === disk2.id, disk3 : disk.id === disk3.id}"
+                :style="{background: disk.color, width: disk.width}"
+                @click="moveDisk(src,disk)">
+                <span>{{disk.id}}</span>
+              </li>
+              </div>
             <div
               class="base"
               @click="setDisk(getSource)"
@@ -30,15 +32,17 @@
         </div>
         <div class="flex-item">
           <ul class="aux">
-            <li
-              class="disk"
-              v-for="disk in aux"
-              :key="disk.id"
-              :class="{disk1: disk.id === disk1.id, disk3 : disk.id === disk3.id}"
-              :style="{background: disk.color, width: disk.width}"
-              @click="moveDisk(aux,disk)">
-              <span>{{disk.id}}</span>
-            </li>
+            <div class="pole">
+              <li
+                class="disk"
+                v-for="disk in aux"
+                :key="disk.id"
+                :class="{disk1: disk.id === disk1.id, disk3 : disk.id === disk3.id}"
+                :style="{background: disk.color, width: disk.width}"
+                @click="moveDisk(aux,disk)">
+                <span>{{disk.id}}</span>
+              </li>
+            </div>
             <div
               class="base"
               @click="setDisk(getAux)"
@@ -49,15 +53,17 @@
           </div>
         <div class="flex-item">
           <ul class="dest">
-            <li
-              class="disk"
-              v-for="disk in dest"
-              :key="disk.id"
-              :class="{disk1: disk.id === disk1.id, disk3 : disk.id === disk3.id}"
-              :style="{background: disk.color, width: disk.width}"
-              @click="moveDisk(dest,disk)">
-              <span>{{disk.id}}</span>
-            </li>
+            <div class="pole">
+              <li
+                class="disk"
+                v-for="disk in dest"
+                :key="disk.id"
+                :class="{disk1: disk.id === disk1.id, disk3 : disk.id === disk3.id}"
+                :style="{background: disk.color, width: disk.width}"
+                @click="moveDisk(dest,disk)">
+                <span>{{disk.id}}</span>
+              </li>
+            </div>
             <div
               class="base"
               @click="setDisk(getDest)"
@@ -89,7 +95,7 @@ export default {
     }
   },
   created () {
-    // this.stackDisks()
+    this.stackDisks()
   },
   methods: {
     stackDisks () {
@@ -123,7 +129,7 @@ export default {
         this.moves++
       } else {
         if (!this.selectedDisk.isTop) alert('cant move bottom disk')
-        if (!this.isLegal()) alert('cant move larger disk on smaller disk')
+        else if (!this.isLegal()) alert('cant move larger disk on smaller disk')
       }
     },
     setTop () {
@@ -188,7 +194,6 @@ export default {
     display: flex;
     border: 1px solid green;
     background-color: lightgrey;
-    margin-top: 25px;
     height: 250px;
     width: 1000px;
   }
@@ -197,7 +202,14 @@ export default {
     width: 700px;
     height: 200px;
     margin: 10px;
-    margin-top: 30px;
+    position: relative;
+  }
+  .pole {
+    border: 1px solid red;
+    height: 150px;
+    width: 215px;
+    margin-top: 0.7cm;
+    position: relative;
   }
   .title {
     color: white;
@@ -206,15 +218,17 @@ export default {
   .src, .aux, .dest {
     border: 1px solid yellow;
     width: 275px;
-    height: 175px;
+    height: 185px;
     position: relative;
   }
   .base {
-    border: 1px solid red;
+    background: #8d6e63;
+    color: white;
     text-align: center;
-    width: 225px;
-    height: 25px;
+    width: 314px;
+    height: 35px;
     margin-left: -40px;
+    bottom: 0;
     position: absolute;
   }
   .base:hover {
@@ -235,11 +249,16 @@ export default {
     color: white;
   }
   .disk1 {
-    margin-left: 110px;
+    margin-left: 70px;
   }
-  disk3 {
-    margin-left: 60px;
+
+  .disk2 {
+    margin-left: 45px;
   }
+  .disk3 {
+    margin-left: 20px;
+  }
+
   ul {
     list-style: none;
   }
