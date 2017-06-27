@@ -4,10 +4,33 @@
       <h3>Tower of Hanoi Visualization</h3>
       <p>Click <a href="#">here</a> to learn how it's played</p>
     </div>
-    <div class="flex-container">
-      <div class="flex-item">source</div>
-      <div class="flex-item">auxiliary</div>
-      <div class="flex-item">destination</div>
+    <div class="puzzle">
+      <div v-if="showWin">
+        <p>You won in {{totalMoves}}</p>
+      </div>
+      <span v-if="totalMoves > 0">Moves made {{totalMoves}}</span>
+      <button @click="restart">restart</button>
+      <div class="flex-container">
+        <div class="flex-item">
+          <ul id="src">
+            <li
+              class="disk"
+              v-for="disk in src"
+              :key="disk.id"
+              :class="{disk1: disk.id === disk1.id, disk3 : disk.id === disk3.id}"
+              :style="{background: disk.color, width: disk.width}"
+              @click="moveDisk(src,disk)">
+              <span>{{disk.id}}</span>
+            </li>
+            <div
+              class="base"
+              @click="setDisk(getSource)"
+              >source</div>
+          </ul>
+        </div>
+        <div class="flex-item">auxiliary</div>
+        <div class="flex-item">destination</div>
+      </div>
     </div>
   </div>
 </template>
@@ -91,6 +114,32 @@ export default {
     isLegal () {
       return this.toPole.length === 0 || this.isSmaller()
     }
+  },
+  computed: {
+    showWin () {
+      return this.src.length === 0 && this.aux.length === 0
+    },
+    totalMoves () {
+      return this.moves
+    },
+    getSrc () {
+      return this.src
+    },
+    getAux () {
+      return this.aux
+    },
+    getDest () {
+      return this.dest
+    },
+    numDisksOnSrc () {
+      return this.src.length
+    },
+    numDisksOnAux () {
+      return this.aux.length
+    },
+    numDisksOnDest () {
+      return this.dest.length
+    }
   }
 }
 </script>
@@ -101,11 +150,11 @@ export default {
     border: 1px solid green;
     background-color: lightgrey;
     height: 250px;
-    width: 600px;
+    width: 800px;
   }
   .flex-item {
-    background-color: white;
-    width: 300px;
+    background-color: gray;
+    width: 400px;
     height: 200px;
     margin: 30px;
   }
@@ -113,9 +162,50 @@ export default {
     color: white;
     text-align: center;
   }
-
+  .src .aux .dest {
+    height: 222px;
+    position: relative;
+  }
+  .base {
+    border: 1px solid red;
+    text-align: center;
+    width: 350px;
+    height: 25px;
+    margin-left: -40px;
+    position: absolute
+  }
+  .base:hover {
+    cursor: pointer;
+  }
+  .disk {
+    border: 1px solid red;
+    height: 15px;
+    text-align: center;
+    padding: 10px;
+    margin-left: 25%;
+    border-radius: 15px;
+    margin-top: 3px;
+  }
+  .disk:hover {
+    cursor: pointer;
+    background: green;
+    color: white;
+  }
+  .disk1 {
+    margin-left: 110px;
+  }
+  disk3 {
+    margin-left: 60px;
+  }
+  ul {
+    list-style: none;
+  }
   a {
     color: white;
+  }
+  h4 {
+    text-align: center;
+    margin-right: 30px;
   }
 
 </style>
