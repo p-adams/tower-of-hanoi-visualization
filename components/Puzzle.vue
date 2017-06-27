@@ -28,8 +28,44 @@
               >source</div>
           </ul>
         </div>
-        <div class="flex-item">auxiliary</div>
-        <div class="flex-item">destination</div>
+        <div class="flex-item">
+          <ul id="aux">
+            <li
+              class="disk"
+              v-for="disk in aux"
+              :key="disk.id"
+              :class="{disk1: disk.id === disk1.id, disk3 : disk.id === disk3.id}"
+              :style="{background: disk.color, width: disk.width}"
+              @click="moveDisk(aux,disk)">
+              <span>{{disk.id}}</span>
+            </li>
+            <div
+              class="base"
+              @click="setDisk(getAux)"
+              >
+              auxiliary
+            </div>
+          </ul>
+          </div>
+        <div class="flex-item">
+          <ul id="dest">
+            <li
+              class="disk"
+              v-for="disk in dest"
+              :key="disk.id"
+              :class="{disk1: disk.id === disk1.id, disk3 : disk.id === disk3.id}"
+              :style="{background: disk.color, width: disk.width}"
+              @click="moveDisk(dest,disk)">
+              <span>{{disk.id}}</span>
+            </li>
+            <div
+              class="base"
+              @click="setDisk(getDest)"
+              >
+              destination
+            </div>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -70,7 +106,9 @@ export default {
       this.moves = 0
     },
     moveDisk (pole, disk) {
-      [this.selectedDisk, this.fromPole] = [disk, pole]
+      console.log(`pole: ${pole} disk: ${disk}`)
+      this.selectedDisk = disk
+      this.fromPole = pole
     },
     setDisk (toPole) {
       this.toPole = toPole
@@ -153,7 +191,7 @@ export default {
     width: 800px;
   }
   .flex-item {
-    background-color: gray;
+    background-color: #9E9E9E;
     width: 400px;
     height: 200px;
     margin: 30px;
