@@ -2,11 +2,15 @@
   <div>
     <div class="title">
       <h3>Tower of Hanoi Visualization</h3>
-      <p>Click <a href="#">here</a> to learn how it's played</p>
+      <p v-if="!showInstructions">Click <a href="#" @click="handleOpen">here</a> to learn how it's played</p>
+      <p class="inst" v-if="showInstructions">The object of the game is to move all the disks over to 
+      the destination tower. Each disk is moved by clicking on the disk
+      and then the pole upon which you want to place the disk.
+      You can only move one disk at a time and you cannot place a larger disk onto a smaller disk. <a href="#" @click="handleClose">close to play!</a></p>
     </div>
-    <div class="puzzle">
-      <div v-if="showWin">
-        <p>You won in {{totalMoves}}</p>
+    <div v-if="!showInstructions" class="puzzle">
+      <div class="win" v-if="showWin">
+        <h3>You won in {{totalMoves}} moves!</h3>
       </div>
       <p class="moves" v-if="totalMoves > 0">Moves made {{totalMoves}}</p>
       <button @click="restart">restart</button>
@@ -21,13 +25,13 @@
                 :class="{disk1: disk.id === disk1.id, disk2: disk.id === disk2.id, disk3 : disk.id === disk3.id}"
                 :style="{background: disk.color, width: disk.width}"
                 @click="moveDisk(src,disk)">
-                <span>{{disk.id}}</span>
               </li>
               </div>
             <div
               class="base"
-              @click="setDisk(getSource)"
-              >source</div>
+              @click="setDisk(getSrc)">
+            <h3>source</h3>
+            </div>
           </ul>
         </div>
         <div class="flex-item">
@@ -40,14 +44,13 @@
                 :class="{disk1: disk.id === disk1.id, disk3 : disk.id === disk3.id}"
                 :style="{background: disk.color, width: disk.width}"
                 @click="moveDisk(aux,disk)">
-                <span>{{disk.id}}</span>
               </li>
             </div>
             <div
               class="base"
               @click="setDisk(getAux)"
               >
-              auxiliary
+              <h3>auxiliary</h3>
             </div>
           </ul>
           </div>
@@ -61,14 +64,13 @@
                 :class="{disk1: disk.id === disk1.id, disk3 : disk.id === disk3.id}"
                 :style="{background: disk.color, width: disk.width}"
                 @click="moveDisk(dest,disk)">
-                <span>{{disk.id}}</span>
               </li>
             </div>
             <div
               class="base"
               @click="setDisk(getDest)"
               >
-              destination
+              <h3>destination</h3>
             </div>
           </ul>
         </div>
@@ -91,7 +93,8 @@ export default {
       disk3: {id: 3, isTop: false, color: '#35495E', width: '150px'},
       src: [],
       aux: [],
-      dest: []
+      dest: [],
+      showInstructions: false
     }
   },
   created () {
@@ -112,7 +115,6 @@ export default {
       this.moves = 0
     },
     moveDisk (pole, disk) {
-      console.log(`pole: ${pole} disk: ${disk}`)
       this.selectedDisk = disk
       this.fromPole = pole
     },
@@ -158,6 +160,15 @@ export default {
     },
     isLegal () {
       return this.toPole.length === 0 || this.isSmaller()
+    },
+    toggleInstruction () {
+      this.showInstructions = !this.showInstructions
+    },
+    handleOpen () {
+      this.showInstructions = true
+    },
+    handleClose () {
+      this.showInstructions = false
     }
   },
   computed: {
@@ -196,6 +207,7 @@ export default {
     background-color: lightgrey;
     height: 250px;
     width: 1000px;
+    margin-top: 35px;
   }
   .flex-item {
     background-color: #9E9E9E;
@@ -205,24 +217,22 @@ export default {
     position: relative;
   }
   .pole {
-    border: 1px solid red;
     height: 150px;
     width: 215px;
     margin-top: 0.7cm;
-    position: relative;
+    position: absolute;
   }
   .title {
     color: white;
     text-align: center;
   }
   .src, .aux, .dest {
-    border: 1px solid yellow;
     width: 275px;
     height: 185px;
     position: relative;
   }
   .base {
-    background: #8d6e63;
+    background: #333333;
     color: white;
     text-align: center;
     width: 314px;
@@ -235,7 +245,6 @@ export default {
     cursor: pointer;
   }
   .disk {
-    border: 1px solid red;
     height: 15px;
     text-align: center;
     padding: 10px;
@@ -249,7 +258,7 @@ export default {
     color: white;
   }
   .disk1 {
-    margin-left: 70px;
+    margin-left: 75px;
   }
 
   .disk2 {
@@ -263,14 +272,30 @@ export default {
     list-style: none;
   }
   a {
+    cursor: pointer;
     color: white;
   }
   h4 {
     text-align: center;
     margin-right: 30px;
   }
+  h3 {
+    margin-top: 5px;
+  }
   .moves {
     color: white;
+  }
+  .win {
+    color: white;
+  }
+  .inst {
+    font-size: 14px;
+    margin: 50px;
+    padding: 10px;
+    color: white;
+    border: 1px dotted white;
+    margin-bottom: 50px;
+    text-align: left;
   }
 
 </style>

@@ -19,7 +19,6 @@ export default {
 <style>
 .container
 {
-  border: 1px solid red;
   background: #333333;
   min-height: 100vh;
   display: flex;
