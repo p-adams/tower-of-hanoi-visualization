@@ -1,7 +1,11 @@
 module.exports = {
   /*
   ** Headers of the page
+  
   */
+  router: {
+    base: '/tower-of-hanoi-visualization/'
+  },
   head: {
     title: 'starter',
     meta: [
