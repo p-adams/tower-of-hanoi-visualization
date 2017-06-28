@@ -77,10 +77,10 @@
       </div>
       <transition name="fade">
       <div v-if="errorMsg1">
-        <p class="error">cannot move bottom disk</p>
+        <p class="error">Cannot move bottom disk</p>
       </div>
       <div v-else-if="errorMsg2">
-        <p class="error">cannot place a larger disk onto a smaller disk</p>
+        <p class="error">Cannot place a larger disk onto a smaller disk</p>
       </div>
       </transition>
 
