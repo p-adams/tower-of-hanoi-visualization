@@ -41,7 +41,7 @@
                 class="disk"
                 v-for="disk in aux"
                 :key="disk.id"
-                :class="{disk1: disk.id === disk1.id, disk3 : disk.id === disk3.id}"
+                :class="{disk1: disk.id === disk1.id, disk2: disk.id === disk2.id, disk3 : disk.id === disk3.id}"
                 :style="{background: disk.color, width: disk.width}"
                 @click="moveDisk(aux,disk)">
               </li>
@@ -61,7 +61,7 @@
                 class="disk"
                 v-for="disk in dest"
                 :key="disk.id"
-                :class="{disk1: disk.id === disk1.id, disk3 : disk.id === disk3.id}"
+                :class="{disk1: disk.id === disk1.id, disk2: disk.id === disk2.id, disk3 : disk.id === disk3.id}"
                 :style="{background: disk.color, width: disk.width}"
                 @click="moveDisk(dest,disk)">
               </li>
@@ -75,6 +75,15 @@
           </ul>
         </div>
       </div>
+      <transition name="fade">
+      <div v-if="errorMsg1">
+        <p class="error">cannot move bottom disk</p>
+      </div>
+      <div v-else-if="errorMsg2">
+        <p class="error">cannot place a larger disk onto a smaller disk</p>
+      </div>
+      </transition>
+
     </div>
   </div>
 </template>
@@ -94,7 +103,9 @@ export default {
       src: [],
       aux: [],
       dest: [],
-      showInstructions: false
+      showInstructions: false,
+      errorMsg1: false,
+      errorMsg2: false
     }
   },
   created () {
@@ -115,6 +126,7 @@ export default {
       this.moves = 0
     },
     moveDisk (pole, disk) {
+      [this.errorMsg1, this.errorMsg2] = [false, false]
       this.selectedDisk = disk
       this.fromPole = pole
     },
@@ -130,8 +142,8 @@ export default {
         })
         this.moves++
       } else {
-        if (!this.selectedDisk.isTop) alert('cant move bottom disk')
-        else if (!this.isLegal()) alert('cant move larger disk on smaller disk')
+        if (!this.selectedDisk.isTop) this.errorMsg1 = true
+        else if (!this.isLegal()) this.errorMsg2 = true
       }
     },
     setTop () {
@@ -258,7 +270,7 @@ export default {
     color: white;
   }
   .disk1 {
-    margin-left: 75px;
+    margin-left: 70px;
   }
 
   .disk2 {
@@ -297,5 +309,13 @@ export default {
     margin-bottom: 50px;
     text-align: left;
   }
-
+  .error {
+    color: red;
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+    opacity: 0
+  }
 </style>
